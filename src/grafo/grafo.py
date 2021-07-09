@@ -40,7 +40,10 @@ class Grafo:
     def salvarEmArquivo(self):
         pass
 
-    def GAcriaAresta(self, v1: int, v2: int):
+    def __arestaValida(a):
+        return a != None
+
+    def GAcriaAresta(self, v1: int, v2: int, peso=1):
         """Cria uma nova ligação no grafo
 
         Args:
@@ -50,7 +53,21 @@ class Grafo:
         Returns:
             int: Identificador do vértice criado
         """
-        self.matriz_adjacencia.novaAresta(v1, v2)
+        self.matriz_adjacencia.novaAresta(v1, v2, peso)
+
+    def GApegaArestaDir(self, v1: int, v2: int):
+        """Retorna a aresta direcionada caso exista
+
+        Args:
+           v1 (int): Vértice de origem
+           v2 (int): Vértice de destino
+
+        Returns:
+           tuple: Caso o identificador seja valído retorna uma tupla com o
+                    vértice de origem e destino. Se não retorna None
+        """
+        matriz_adjacencia = self.matriz_adjacencia
+        return matriz_adjacencia.pegaAresta(v1, v2) or matriz_adjacencia.pegaAresta(v2, v1)
 
     def GApegaAresta(self, v1: int, v2: int):
         """Retorna a aresta caso exista
@@ -141,3 +158,91 @@ class Grafo:
 
     def __str__(self):
         return self.matriz_adjacencia.__str__()
+
+    def GIpegaGrau(self, v: int):
+        return self.matriz_adjacencia.pegaGrau(v)
+
+    def GBarestaLaco(self, a: int):
+        matriz_adjacencia = self.matriz_adjacencia
+        aresta = matriz_adjacencia.pegaLigacaoDaAresta(a)
+
+        if not aresta:
+            return None
+
+        [vertice_origem, vertice_destino] = aresta
+        print('ok ', vertice_origem, vertice_destino)
+        aresta = matriz_adjacencia.pegaAresta(vertice_origem, vertice_destino)
+
+        return aresta != CodigoArestas.SEM_LIGACAO
+
+    def GAlfa(self, a: int):
+        """Pega o vértice de partida da aresta
+
+        Args:
+            a (int): Identificador da arestas
+        """
+        arestas = self.matriz_adjacencia.pegaLigacaoDaAresta(a)
+        if(self.__arestaValida(arestas)):
+            [vertice_origem, _] = arestas
+            return vertice_origem
+
+        return None
+
+    def GOmega(self, a: int):
+        """Pega o vértice de chegada da aresta
+
+        Args:
+            a (int): Identificador da arestas
+        """
+        arestas = self.matriz_adjacencia.pegaLigacaoDaAresta(a)
+
+        if(self.__arestaValid(arestas)):
+            [_, vertice_destino] = arestas
+            return vertice_destino
+
+        return None
+
+    def GAprimaAresta(self, v: int):
+        """
+        Pega a primeira aresta na estrela do vértice, em grafos não dirigidos
+
+        Args:
+            v (int): Vertice
+        """
+        arestas = self.matriz_adjacencia.arestas
+        for (identificador, aresta) in arestas.items():
+            [v1, v2] = aresta
+            if v1 == v or v2 == v:
+                return identificador
+
+        return None
+
+    def GAprimaEntrada(self, v: int):
+        """
+        Pega a primeira aresta na estrela de entrada do vértice, em grafos dirigidos
+
+        Args:
+            v (int): Vertice buscado
+        """
+        arestas = self.matriz_adjacencia.arestas
+        for (identificador, aresta) in arestas.items():
+            [vertice_origem, _] = aresta
+            if vertice_origem == v:
+                return identificador
+
+        return None
+
+    def GAprimaSaida(self, v: int):
+        """
+        Pega a primeira aresta na estrela de saída do vértice, em grafos dirigidos
+
+        Args:
+            v (int): Vertice
+        """
+        arestas = self.matriz_adjacencia.arestas
+        for (identificador, aresta) in arestas.items():
+            [vertice_destino] = aresta
+            if vertice_destino == v:
+                return identificador
+
+        return None

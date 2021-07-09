@@ -1,5 +1,6 @@
 import numpy as np
 import pandas as pd
+from . import codigoArestas as CodigoArestas
 
 
 class MatrizAdjacencia:
@@ -13,7 +14,7 @@ class MatrizAdjacencia:
         self.__matriz = np.zeros(
             (self.max_vertices, self.max_vertices), dtype=int)
 
-    def novaAresta(self, v1: int, v2: int):
+    def novaAresta(self, v1: int, v2: int, peso=1):
         if self.cont_arestas == self.max_arestas:
             return None
 
@@ -21,19 +22,37 @@ class MatrizAdjacencia:
         v2 = int(v2)
 
         if v1 >= 0 and v2 >= 0:
-            self.__matriz[v1 - 1, v2 - 1] = 1
+            self.__matriz[v1 - 1, v2 - 1] = peso
             return self.__salvaIdentificador(v1, v2)
 
     def pegaAresta(self, v1: int, v2: int):
         return self.__matriz[v1, v2]
 
-    def pegaAresta(self, a: int):
+    # def pegaAresta(self, a: int):
+    #     aresta = self.arestas.get(a)
+    #     if not aresta:
+    #         return None
+
+    #     [vertice_origem, vertice_destino] = aresta
+    #     return self.pegaAresta(vertice_origem, vertice_destino)
+
+    def pegaLigacaoDaAresta(self, a: int):
+        """
+        Recebe como parâmetro o identificador e retorna uma tupla com os vertices
+        da aresta
+
+        Args:
+            a (int): Identificador
+
+        Returns:
+            tuple: Tupla com a aresta
+        """
         aresta = self.arestas.get(a)
         if not aresta:
             return None
 
         [vertice_origem, vertice_destino] = aresta
-        return self.pegaAresta(vertice_origem, vertice_destino)
+        return (vertice_origem - 1, vertice_destino - 1)
 
     def __salvaIdentificador(self, v1: int, v2: int):
         """
@@ -56,8 +75,24 @@ class MatrizAdjacencia:
         return identificador
 
     def pegaGrau(self, v: int):
-        pass
+        v = v - 1
+
+        linha = self.__matriz[v]
+        coluna = self.__matriz[:, v]
+
+        contador = 0
+        for elemento in linha:
+            if elemento != CodigoArestas.SEM_LIGACAO:
+                contador += 1
+
+        for elemento in coluna:
+            if elemento != CodigoArestas.SEM_LIGACAO:
+                contador += 1
+
+        return contador
+        # for line in self.__matriz
 
     def __str__(self):
         df = pd.DataFrame(self.__matriz)
+        print(self.arestas)
         return df.to_string()
