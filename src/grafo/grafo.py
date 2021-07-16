@@ -241,8 +241,11 @@ class Grafo:
         """
         arestas = self.matriz_adjacencia.arestas
         for (identificador, aresta) in arestas.items():
-            [vertice_destino] = aresta
+            [_, vertice_destino] = aresta
             if vertice_destino == v:
                 return identificador
 
         return None
+
+    def GAAdjacencias(self, v):
+        return self.matriz_adjacencia.pegarVerticesAdjacentes(v)

@@ -14,8 +14,9 @@ if __name__ == '__main__':
     grafo.GAcriaAresta(2, 2)
 
     grafo.GIpegaGrau(1)
+    print('adjancencias de 1 ', grafo.GAAdjacencias(2))
 
-    print('cont_arestas: ', grafo.cont_arestas)
-    print('laço ', grafo.GBarestaLaco(6))
+    # print('cont_arestas: ', grafo.cont_arestas)
+    # print('laço ', grafo .GBarestaLaco(6))
     print(grafo)
     # grafo.carregarArquivo()

@@ -92,6 +92,27 @@ class MatrizAdjacencia:
         return contador
         # for line in self.__matriz
 
+    def pegarVerticesAdjacentes(self, v: int):
+        """
+        Retorna todos os vertices adjacentes a um vertice v. Lembrando que em uma
+        matriz de adjacência os vertices adjacetes são todos diferentes de zero
+        M[V][j]
+
+        Args:
+            v (int): Vertice qualquer
+
+        Returns:
+            Array: Array com todos os vertices adjacentes a V
+        """
+        arestas = self.__matriz[v-1]
+        adjancentes = []
+
+        for index, aresta in enumerate(arestas):
+            if aresta != CodigoArestas.SEM_LIGACAO:
+                adjancentes.append(index)
+
+        return adjancentes
+
     def __str__(self):
         df = pd.DataFrame(self.__matriz)
         print(self.arestas)
