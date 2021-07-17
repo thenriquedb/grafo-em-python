@@ -16,18 +16,18 @@ class Dijkstra:
         h = HeapMin()
         h.adiciona_no(0, origem)
 
-        matriz_adjacencia = self.grafo.matriz_adjacencia.getMatriz()
+        matriz_adjacencia = self.grafo.matriz_adjacencia
 
         while h.tamanho() > 0:
             dist, v = h.remove_no()
 
             for i in range(max_vertices):
-                if matriz_adjacencia[v - 1, i] == CodigoArestas.SEM_LIGACAO:
+                if matriz_adjacencia.pegaAresta(v - 1, i) == CodigoArestas.SEM_LIGACAO:
                     continue
 
                 e_infinito = custo_vem[i][0] == INFINITY
                 custo_atual = custo_vem[i][0]
-                novo_custo = dist + matriz_adjacencia[v - 1, i]
+                novo_custo = dist + matriz_adjacencia.pegaAresta(v - 1, i)
 
                 if e_infinito or custo_atual > novo_custo:
                     custo_vem[i] = [novo_custo, v]
