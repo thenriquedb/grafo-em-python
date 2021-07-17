@@ -1,6 +1,7 @@
 
 from .matrizAdjacencia import MatrizAdjacencia
 from . import codigoArestas as CodigoArestas
+from .dijkstra import Dijkstra
 
 
 class Grafo:
@@ -31,7 +32,7 @@ class Grafo:
                 self.max_vertices = max_vertices
                 self.max_arestas = max_arestas
 
-            [vertice_origem, vertice_destino] = line.split()
+            [vertice_vertice_origem, vertice_destino] = line.split()
 
             # Como a matriz inicia no index 1 é necessário subtrair 1 no valor do
             # vertice para acessar a posição da matriz corretamente.
@@ -54,6 +55,19 @@ class Grafo:
             int: Identificador do vértice criado
         """
         self.matriz_adjacencia.novaAresta(v1, v2, peso)
+
+    def GAcriaArestaNaoDirecionada(self, v1: int, v2: int, peso=1):
+        """Cria uma nova ligação não direcionada grafo
+
+        Args:
+            v1 (int): Vértice de origem
+            v2 (int): Vértice de destino
+
+        Returns:
+            int: Identificador do vértice criado
+        """
+        self.matriz_adjacencia.novaAresta(v1, v2, peso)
+        self.matriz_adjacencia.novaAresta(v2, v1, peso)
 
     def GApegaArestaDir(self, v1: int, v2: int):
         """Retorna a aresta direcionada caso exista
@@ -249,3 +263,7 @@ class Grafo:
 
     def GAAdjacencias(self, v):
         return self.matriz_adjacencia.pegarVerticesAdjacentes(v)
+
+    def dijkstra(self, vertice_origem: int):
+        dijkstra = Dijkstra(self)
+        return dijkstra.calcular(vertice_origem)

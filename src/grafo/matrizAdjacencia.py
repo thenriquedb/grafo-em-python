@@ -14,12 +14,15 @@ class MatrizAdjacencia:
         self.__matriz = np.zeros(
             (self.max_vertices, self.max_vertices), dtype=int)
 
+    def getMatriz(self):
+        return self.__matriz
+
     def novaAresta(self, v1: int, v2: int, peso=1):
         if self.cont_arestas == self.max_arestas:
             return None
-
         v1 = int(v1)
         v2 = int(v2)
+        print("criou", (v1, v2, peso))
 
         if v1 >= 0 and v2 >= 0:
             self.__matriz[v1 - 1, v2 - 1] = peso
@@ -102,9 +105,9 @@ class MatrizAdjacencia:
             v (int): Vertice qualquer
 
         Returns:
-            Array: Array com todos os vertices adjacentes a V
+            Array: Lista com todos os vertices adjacentes a V
         """
-        arestas = self.__matriz[v-1]
+        arestas = self.__matriz[v]
         adjancentes = []
 
         for index, aresta in enumerate(arestas):
@@ -115,5 +118,5 @@ class MatrizAdjacencia:
 
     def __str__(self):
         df = pd.DataFrame(self.__matriz)
-        print(self.arestas)
+        print('Lista de arestas: {} \n'.format(self.arestas))
         return df.to_string()
