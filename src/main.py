@@ -1,4 +1,5 @@
 from grafo import Grafo
+import grafo
 
 if __name__ == '__main__':
     NUM_VERTICES = 7
@@ -18,9 +19,11 @@ if __name__ == '__main__':
     grafo.GAcriaArestaNaoDirecionada(5, 7, peso=3)
     grafo.GAcriaArestaNaoDirecionada(6, 7, peso=8)
 
-    print(grafo)
+    grafo.salvarEmArquivo("resultado-grafo.txt")
+    # print(grafo)
+
     custo = grafo.dijkstra(1)
-    print('Lista de custos', custo)
+    # print('Lista de custos', custo)
     # bfs = BFS(grafo)
     # bfs.buscar(1, 5)
     # print('cont_arestas: ', grafo.cont_arestas)

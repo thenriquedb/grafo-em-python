@@ -1,4 +1,5 @@
 
+import numpy as np
 from .matrizAdjacencia import MatrizAdjacencia
 from . import codigoArestas as CodigoArestas
 from .dijkstra import Dijkstra
@@ -38,8 +39,37 @@ class Grafo:
             # vertice para acessar a posição da matriz corretamente.
             self.matriz_adjacencia.novaAresta(vertice_origem, vertice_destino)
 
-    def salvarEmArquivo(self):
-        pass
+    def __grafoEPonderado(self):
+        """Verifica se o grafo é ponderado ou não
+
+        Returns:
+            bool: True caso seja ponderado
+        """
+        matriz = self.matriz_adjacencia.getMatriz()
+        res = np.where(matriz != CodigoArestas.ARESTA_SIMPLES)
+        return res[0].size > 0
+
+    def salvarEmArquivo(self, filename: str = "resultado.txt"):
+        """Salva o grafo gerado em um arquivo txt
+
+        Args:
+            filename (str): nome do arquivo
+        """
+        with open(filename, "w") as file:
+            grafoPonderado = self.__grafoEPonderado()
+
+            for i in range(self.max_vertices):
+                for j in range(self.max_vertices):
+                    aresta = self.matriz_adjacencia.pegaAresta(i, j)
+
+                    if(aresta == CodigoArestas.SEM_LIGACAO):
+                        continue
+
+                    if(grafoPonderado):
+                        file.write("{} {} {}\n".format(i + 1, j + 1, aresta))
+                        continue
+
+                    file.write("{} {}\n".format(i + 1, j + 1))
 
     def __arestaValida(a):
         return a != None
