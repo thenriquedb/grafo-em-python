@@ -1,5 +1,4 @@
 import numpy as np
-import pandas as pd
 from . import codigoArestas as CodigoArestas
 
 
@@ -22,7 +21,6 @@ class MatrizAdjacencia:
             return None
         v1 = int(v1)
         v2 = int(v2)
-        print("criou", (v1, v2, peso))
 
         if v1 >= 0 and v2 >= 0:
             self.__matriz[v1 - 1, v2 - 1] = peso
@@ -117,6 +115,9 @@ class MatrizAdjacencia:
         return adjancentes
 
     def __str__(self):
-        df = pd.DataFrame(self.__matriz)
-        print('Lista de arestas: {} \n'.format(self.arestas))
-        return df.to_string()
+        # df = pd.DataFrame(self.__matriz)
+        # print('Lista de arestas: {} \n'.format(self.arestas))
+        print()
+        string = ""
+
+        return str(self.__matriz)
