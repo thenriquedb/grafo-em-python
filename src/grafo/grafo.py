@@ -6,21 +6,29 @@ from .dijkstra import Dijkstra
 
 
 class Grafo:
-    def __init__(self, max_vertices: int, max_arestas: int):
+    def __init__(self, max_vertices: int = 0, max_arestas: int = 0):
+        if max_vertices != 0 and max_arestas != 0:
+            self.__inicia_grafo(max_vertices, max_arestas)
+
+    def __inicia_grafo(self, max_vertices: int, max_arestas: int):
         self.max_vertices = max_vertices
         self.max_arestas = max_arestas
 
         self.vertices = list(range(1, self.max_vertices))
-        self.arestas = dict()
 
-        self.matriz_adjacencia = MatrizAdjacencia(max_vertices, max_arestas)
+        self.matriz_adjacencia = MatrizAdjacencia(
+            max_vertices, max_arestas)
 
     @property
     def cont_arestas(self):
         return self.matriz_adjacencia.cont_arestas
 
-    def carregarArquivo(self):
-        file = open("graph/grafo.txt", "r")
+    @property
+    def arestas(self):
+        return self.matriz_adjacencia.arestas
+
+    def carregarArquivo(self, path):
+        file = open(path, "r")
         lines = file.read().splitlines()
 
         for (index, line) in enumerate(lines):
@@ -30,10 +38,10 @@ class Grafo:
                 max_vertices = int(conteudo[0])
                 max_arestas = int(conteudo[1])
 
-                self.max_vertices = max_vertices
-                self.max_arestas = max_arestas
+                self.__inicia_grafo(max_vertices, max_arestas)
+                continue
 
-            [vertice_vertice_origem, vertice_destino] = line.split()
+            [vertice_origem, vertice_destino] = line.split()
 
             # Como a matriz inicia no index 1 é necessário subtrair 1 no valor do
             # vertice para acessar a posição da matriz corretamente.
@@ -113,7 +121,7 @@ class Grafo:
         matriz_adjacencia = self.matriz_adjacencia
         return matriz_adjacencia.pegaAresta(v1, v2) or matriz_adjacencia.pegaAresta(v2, v1)
 
-    def GApegaAresta(self, v1: int, v2: int):
+    def GApegaArestza(self, v1: int, v2: int):
         """Retorna a aresta caso exista
 
         Args:
@@ -129,14 +137,14 @@ class Grafo:
     def GApegaAresta(self, a: int):
         """Retorna a aresta caso exista
 
-        Args:
-            a (int): Identificador da aresta
+            Args:
+                a (int): Identificador da aresta
 
-        Returns:
-            tuple: Caso o identificador seja valído retorna uma tupla com o 
-                     vértice de origem e destino. Se não retorna None
+            Returns:
+                tuple: Caso o identificador seja valído retorna uma tupla com o
+                            vértice de origem e destino. Se não retorna None
         """
-        return self.matriz_adjacencia.pegaAresta(a)
+        return self.matriz_adjacencia.arestas.get(a)
 
     def GBexisteAresta(self, v1: int, v2: int):
         """Verifica se a aresta não dirigida existe no grafo
@@ -180,7 +188,7 @@ class Grafo:
         """Retorna o número de arestas no grafo
 
         Returns:
-            int: Quantidade de arestas adicionadas  
+            int: Quantidade de arestas adicionadas
         """
         return self.matriz_adjacencia.cont_arestas
 
@@ -188,7 +196,7 @@ class Grafo:
         """Retorna o número maxímo de arestas no grafo
 
         Returns:
-            int: Quantidade de maxíma de arestas   
+            int: Quantidade de maxíma de arestas
         """
         return self.max_arestas
 
@@ -214,7 +222,6 @@ class Grafo:
             return None
 
         [vertice_origem, vertice_destino] = aresta
-        print('ok ', vertice_origem, vertice_destino)
         aresta = matriz_adjacencia.pegaAresta(vertice_origem, vertice_destino)
 
         return aresta != CodigoArestas.SEM_LIGACAO

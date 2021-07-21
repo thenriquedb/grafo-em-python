@@ -1,0 +1,16 @@
+COM  ler e imprimir um grafo
+LER grafo2.txt
+IMPRIMIR
+COM verifica se existe ID vertice
+EXISTEIDVERT 11
+COM verifica se existe ID aresta
+EXISTEIDAREST 4
+COM verifica se existe aresta direcionada
+EXISTEIDARESTDIR 6 10
+COM pega ID aresta
+PEGAARESTA 6 10
+COM imprimir numero atual de vertices
+NUMEROVERT
+COM imprimir numero atual de arestas
+NUMEROARESTA
+SAIR

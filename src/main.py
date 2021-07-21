@@ -1,31 +1,12 @@
 from grafo import Grafo
 import grafo
+from testGrafo import TestGrafo
 
 if __name__ == '__main__':
-    NUM_VERTICES = 7
-    NUM_ARESTAS = 32
+    testGrafo = TestGrafo(path_grafo_1="testes/grafo1.txt",
+                          path_grafo_2="testes/grafo2.txt",
+                          path_grafo_3="testes/grafo3.txt")
 
-    grafo = Grafo(NUM_VERTICES, NUM_ARESTAS)
-
-    grafo.GAcriaArestaNaoDirecionada(1, 2, peso=5)
-    grafo.GAcriaArestaNaoDirecionada(1, 3, peso=6)
-    grafo.GAcriaArestaNaoDirecionada(1, 4, peso=10)
-    grafo.GAcriaArestaNaoDirecionada(2, 5, peso=13)
-    grafo.GAcriaArestaNaoDirecionada(3, 4, peso=3)
-    grafo.GAcriaArestaNaoDirecionada(3, 5, peso=11)
-    grafo.GAcriaArestaNaoDirecionada(3, 6, peso=6)
-    grafo.GAcriaArestaNaoDirecionada(4, 5, peso=6)
-    grafo.GAcriaArestaNaoDirecionada(4, 6, peso=4)
-    grafo.GAcriaArestaNaoDirecionada(5, 7, peso=3)
-    grafo.GAcriaArestaNaoDirecionada(6, 7, peso=8)
-
-    grafo.salvarEmArquivo("resultado-grafo.txt")
-    # print(grafo)
-
-    custo = grafo.dijkstra(1)
-    # print('Lista de custos', custo)
-    # bfs = BFS(grafo)
-    # bfs.buscar(1, 5)
-    # print('cont_arestas: ', grafo.cont_arestas)
-    # print('laço ', grafo .GBarestaLaco(6))
-    # grafo.carregarArquivo()
+    # testGrafo.testar_grafo_01()
+    # testGrafo.testar_grafo_02()
+    testGrafo.testar_grafo_03()
