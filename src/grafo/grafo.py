@@ -146,6 +146,42 @@ class Grafo:
         """
         return self.matriz_adjacencia.arestas.get(a)
 
+    def GVprimeiroVertice(self):
+        """
+        Retorna o primeiro vértice do grafo
+
+        Returns:
+            int: Identificador do vértice
+        """
+        return self.vertices[0]
+
+    def GVproximoVertice(self, v: int):
+        """
+        Retorna o próximo vértice do grafo
+
+        Returns:
+            int: identificador do vértice 
+        """
+        return self.vertices[v + 1]
+
+    def GAprimeiraAresta(self):
+        """
+        Pega a próxima aresta do grafo
+
+        Returns:
+            int: identificador da aresta 
+        """
+        return self.matriz_adjacencia.arestas[0]
+
+    def GVproximaAresta(self, a: int):
+        """
+        Pega a primeira aresta do grafo
+
+        Returns:
+            int: identificador da aresta 
+        """
+        return self.matriz_adjacencia.arestas[a + 1]
+
     def GBexisteAresta(self, v1: int, v2: int):
         """Verifica se a aresta não dirigida existe no grafo
 
@@ -183,6 +219,93 @@ class Grafo:
             bool: True caso exista e False se não
         """
         return v in self.vertices
+
+    def GBexisteIdAresta(self, a: int):
+        return self.matriz_adjacencia.pegaArestaID(a)
+
+    def __pega_arestas_a_partir_do_identificador(self, a: int):
+        # Pega o index do identificador a no dicionário de arestas
+        arestas = self.matriz_adjacencia.arestas
+        keys = list(arestas.keys())
+        index = keys.index(a)
+        items = list(arestas.items())
+
+        return items[index + 1:]
+
+    def GVvizinho(self, a: int, v: int):
+        if not self.GBexisteIdVertice(v) and not self.GBexisteIdAresta(a):
+            return None
+
+        [v_origem, v_destino] = self.GApegaAresta(a)
+
+        if v_origem == v:
+            return v_destino
+
+        if v_destino == v:
+            return v_origem
+
+        return None
+
+    def GAproxAresta(self, v: int, a: int):
+        """
+        Pega a próxima aresta do grafo
+
+        Args:
+            a (int): [description]
+            v (int): [description]
+        """
+
+        if not self.GBexisteIdVertice(v) and not self.GBexisteIdAresta(a):
+            return None
+
+        arestas = self.__pega_arestas_a_partir_do_identificador(a)
+        for id, aresta in arestas:
+            [v_origem, v_destino] = aresta
+
+            if v == v_origem or v == v_destino:
+                return id
+
+        return None
+
+    def GAproxEntrada(self, v: int, a: int):
+        """
+        Pega a próxima aresta de entrada grafo
+
+        Args:
+            a (int): [description]
+            v (int): [description]
+        """
+        if not self.GBexisteIdVertice(v) and not self.GBexisteIdAresta(a):
+            return None
+
+        arestas = self.__pega_arestas_a_partir_do_identificador(a)
+        for id, aresta in arestas:
+            [v_origem, _] = aresta
+
+            if v == v_origem:
+                return id
+
+        return None
+
+    def GAproxSaida(self, v: int, a: int):
+        """
+        Pega a próxima aresta de entrada grafo
+
+        Args:
+            a (int): [description]
+            v (int): [description]
+        """
+        if not self.GBexisteIdVertice(v) and not self.GBexisteIdAresta(a):
+            return None
+
+        arestas = self.__pega_arestas_a_partir_do_identificador(a)
+        for id, aresta in arestas:
+            [_, v_destino] = aresta
+
+            if v == v_destino:
+                return id
+
+        return None
 
     def GInumeroArestas(self):
         """Retorna o número de arestas no grafo

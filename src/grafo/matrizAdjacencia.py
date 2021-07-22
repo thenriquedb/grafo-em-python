@@ -29,13 +29,12 @@ class MatrizAdjacencia:
     def pegaAresta(self, v1: int, v2: int):
         return self.__matriz[v1, v2]
 
-    # def pegaAresta(self, a: int):
-    #     aresta = self.arestas.get(a)
-    #     if not aresta:
-    #         return None
+    def pegaArestaID(self, a: int):
+        aresta = self.arestas.get(a)
+        if not aresta:
+            return None
 
-    #     [vertice_origem, vertice_destino] = aresta
-    #     return self.pegaAresta(vertice_origem, vertice_destino)
+        return aresta
 
     def pegaLigacaoDaAresta(self, a: int):
         """

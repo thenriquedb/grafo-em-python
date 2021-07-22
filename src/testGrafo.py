@@ -23,6 +23,7 @@ class TestGrafo:
         print("Qtde máxima de vertices {}".format(self.grafo.max_vertices))
         print("Qtde máxima de arestas {}".format(self.grafo.max_arestas))
         print("----------------------------------------------\n")
+
     def __existe_vertice(self, v: int):
         print("Existe o vértice {}: {}".format(
             v, self.grafo. GBexisteIdVertice(v)))
