@@ -13,7 +13,7 @@ class TestGrafo:
         self.grafo.carregarArquivo(path)
 
     def __informacoes_basicas(self):
-        print(self.grafo)
+        # print(self.grafo)
 
         print("\nLista de arestas: ")
         for [id, aresta] in self.grafo.arestas.items():
