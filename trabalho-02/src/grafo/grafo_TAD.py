@@ -93,6 +93,18 @@ class GrafoTAD:
                 [v_origem, v_destino] = ligacao
                 file.write("{} {} {}\n".format(id_aresta, v_origem, v_destino))
 
+    def pega_vertices_adjacentes(self):
+        adjacentes = dict()
+
+        for vertice in list(self.vertices):
+            for id_aresta, ligacao in self.arestas.items():
+                [v_origem, v_destino] = ligacao
+
+                if vertice == v_origem or vertice == v_destino:
+                    adjacentes[vertice] = id_aresta
+
+        return adjacentes
+
     def __aresta_existe(self, id_aresta: int):
         return id_aresta in self.arestas.keys()
 
