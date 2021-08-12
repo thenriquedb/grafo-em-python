@@ -82,12 +82,16 @@ class GrafoTAD:
                         v_origem), int(v_destino))
 
     def salvar_arquivo(self, nome_arquivo: str = "resultado.txt"):
-        """Salva o grafo gerado em um arquivo txt
+        with open(nome_arquivo, "w") as file:
+            file.write("{} {}\n".format(self.cont_vertices, self.cont_arestas))
+            file.write("{} {}\n".format(self.semente[0], self.semente[1]))
 
-        Args:
-            filename (str): nome do arquivo
-        """
-        pass
+            for vertice in list(self.vertices):
+                file.write("{}\n".format(vertice))
+
+            for id_aresta, ligacao in self.arestas.items():
+                [v_origem, v_destino] = ligacao
+                file.write("{} {} {}\n".format(id_aresta, v_origem, v_destino))
 
     def __aresta_existe(self, id_aresta: int):
         return id_aresta in self.arestas.keys()
